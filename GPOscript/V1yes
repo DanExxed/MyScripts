@@ -336,7 +336,7 @@ end
 
 local DiscordLib =
     loadstring(game:HttpGet "https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
-local win = DiscordLib:Window("DanHub - Grand Piece Online")
+local win = DiscordLib:Window("DanHub V2 - Grand Piece Online")
 local serv = win:Server("Farming", "")
 local toolmob = "Bandit"
 local AutoBuso = false
