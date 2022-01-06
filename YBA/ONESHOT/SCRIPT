@@ -1,0 +1,3 @@
+function()
+game:GetService("Workspace").Living[plr].StandMorph.HumanoidRootPart:BreakJoints()
+		end)
