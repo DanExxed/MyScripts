@@ -1,0 +1,26 @@
+--dont skid this, or else!!!
+if game.PlaceId == 10297454652 then
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Orandara Hub", "DarkTheme")
+local Tab = Window:NewTab("Main")
+local Tab2 = Window:NewTab("Credits")
+local Section = Tab:NewSection("Main Functions")
+local sec54 = Tab2:NewSection("Credits lulw")
+local stats = {"Coins", "Crystals", "EventTickets", "Level", "Experience"}
+local packs = {"Pack1", "Pack2", "Pack3", "Pack4", "Pack5", "Pack6"}
+
+Section:NewButton("Infinite Stats", "Gives you infinite stats lol", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/DanExxed/GuiAssets/main/InfiniteMiniCallStats"))()
+    print("Hello fellow skiddies")
+end)
+Section:NewButton("Free Event Items", "Gives you all event items for free.", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/DanExxed/GuiAssets/main/FreeEventItems"))()
+    print("stop using thy script")
+end)
+
+sec54:NewButton("Made by DanExxed in 10 minutes!!", "Creditz!!", function()
+   print("Made By DanExxed")
+end)
+else 
+    game.Players.LocalPlayer:Kick("lol join the right game")
+    end
