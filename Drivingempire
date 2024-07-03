@@ -131,7 +131,7 @@
 
         local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Simak90/pfsetcetc/main/fluxed.lua"))() -- UI Library
 
-                local win = lib:Window("Up yr ass and around the corner", "Mousa cooks #1 fan", Color3.fromRGB(255, 0, 0), _G.closeBind) -- done mess with
+                local win = lib:Window("MousaHub", "Mousa cooks #1 fan", Color3.fromRGB(255, 0, 0), _G.closeBind) -- done mess with
 
             
 
