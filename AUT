@@ -1,4 +1,4 @@
-
+-- // Mythril Hub ♦️ \\ -- | (Version 1.01) [ Made by ThroughTheFireAndFlames#9925 :3 ] Any attempts to make profit off this project are pathetic and will be laughed at.
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 getgenv().CurrentVersion = "1.01";
 
@@ -24,8 +24,8 @@ elseif getgenv().Device == "PC" then
 end
 
 -- // Loaded Notification \\ --
-BoredLibrary.prompt("ReiiiK Hub  ♦️","KILL ALL NIGGERS",1.5);BoredLibrary.prompt("Mythril Hub  ♦️","Current Version: "..getgenv().CurrentVersion,1.5);
-local MainWindow = VenusLibrary:Load({Name = "ReiiK Hub   ♦️  -  KILL ALL NIGGERS", Theme = "Dark", SizeX = X,SizeY = Y,ColorOverrides = {}});
+BoredLibrary.prompt("Mythril Hub  ♦️","Welcome To Mythril Hub :3",1.5);BoredLibrary.prompt("Mythril Hub  ♦️","Current Version: "..getgenv().CurrentVersion,1.5);
+local MainWindow = VenusLibrary:Load({Name = "Mythril Hub   ♦️  -  dsc.gg/Flames-Community", Theme = "Dark", SizeX = X,SizeY = Y,ColorOverrides = {}});
 local HomeTab = MainWindow:Tab("Home");
 local FarmingTab = MainWindow:Tab("Farming");
 ---------------------------------[[ Main Source Code 💞 ]]------------------------------------------------------------
@@ -306,8 +306,15 @@ local Toggle = MainAutofarm:Toggle({Name = "Auto Complete Zoro Quest",Flag = "To
                 local args = {[1] = "Zoros_Swords_Adventure"};
                 game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF"):WaitForChild("CheckDialogue"):InvokeServer(unpack(args));
                 game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF"):WaitForChild("PickedUpSword"):InvokeServer();
+                game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF"):WaitForChild("PickedUpSword"):InvokeServer();
+                local args = {[1] = "Zoros_Swords_Adventure"};
+                game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF"):WaitForChild("CheckDialogue"):InvokeServer(unpack(args));
+                game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF"):WaitForChild("PickedUpSword"):InvokeServer();
+                local args = {[1] = "Zoros_Swords_Adventure"};
+                game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF"):WaitForChild("CheckDialogue"):InvokeServer(unpack(args));
+                game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF"):WaitForChild("PickedUpSword"):InvokeServer();
             end)
-            task.wait(0.005);
+            task.wait(0.00005);
         end
     end)
 end})
