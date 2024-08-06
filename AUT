@@ -1,5 +1,3 @@
--- // Mythril Hub ♦️ \\ -- | (Version 1.01) [ Made by ThroughTheFireAndFlames#9925 :3 ] Any attempts to make profit off this project are pathetic and will be laughed at.
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 getgenv().CurrentVersion = "1.01";
 
 -- // Anti AFK \\ --
@@ -24,8 +22,8 @@ elseif getgenv().Device == "PC" then
 end
 
 -- // Loaded Notification \\ --
-BoredLibrary.prompt("Mythril Hub  ♦️","Welcome To Mythril Hub :3",1.5);BoredLibrary.prompt("Mythril Hub  ♦️","Current Version: "..getgenv().CurrentVersion,1.5);
-local MainWindow = VenusLibrary:Load({Name = "Mythril Hub   ♦️  -  dsc.gg/Flames-Community", Theme = "Dark", SizeX = X,SizeY = Y,ColorOverrides = {}});
+BoredLibrary.prompt("ReKO hub","KKK",1.5);BoredLibrary.prompt("ReKO  ♦️","Current Version: "..getgenv().CurrentVersion,1.5);
+local MainWindow = VenusLibrary:Load({Name = "FUCK KURO", Theme = "Dark", SizeX = X,SizeY = Y,ColorOverrides = {}});
 local HomeTab = MainWindow:Tab("Home");
 local FarmingTab = MainWindow:Tab("Farming");
 ---------------------------------[[ Main Source Code 💞 ]]------------------------------------------------------------
