@@ -1,3 +1,7 @@
+-----------------------------------------------------------------
+repeat task.wait(0.25) until game:IsLoaded();local BoredLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/Lvl9999/Bored/main/Backup"))();
+
+getgenv().ToggleUI = "B";
 getgenv().CurrentVersion = "1.01";
 
 -- // Anti AFK \\ --
@@ -11,25 +15,23 @@ task.spawn(function()
     end
 end)
 
------------------------------------[[ Main Ui Libs ]]------------------------------------------------------------------
-local VenusLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/Lvl9999/Venus/main/Backup",true))();
-local BoredLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/Lvl9999/Bored/main/Backup"))();
------------------------------------[[ Main Ui Libs ]]------------------------------------------------------------------
-if getgenv().Device == "Mobile" then
-	X = 280;Y = 280;
-elseif getgenv().Device == "PC" then
-	X = 480;Y = 480;
-end
-
 -- // Loaded Notification \\ --
-BoredLibrary.prompt("ReKO hub","KKK",1.5);BoredLibrary.prompt("ReKO  ♦️","Current Version: "..getgenv().CurrentVersion,1.5);
-local MainWindow = VenusLibrary:Load({Name = "FUCK KURO", Theme = "Dark", SizeX = X,SizeY = Y,ColorOverrides = {}});
-local HomeTab = MainWindow:Tab("Home");
-local FarmingTab = MainWindow:Tab("Farming");
----------------------------------[[ Main Source Code 💞 ]]------------------------------------------------------------
-local LocalPlayerStuff = HomeTab:Section({Name = "Local Player Stuff",column = 1});
+task.spawn(function()BoredLibrary.prompt("Mythril Hub  ♦️","Welcome To Mythril Hub :3",1.5);end)
+-----------------------------------[[ Main Ui Libs ]]------------------------------------------------------------------
+local DarkraiX = loadstring(game:HttpGet("https://raw.githubusercontent.com/Lvl9999/Darkrai/main/Backup",true))();
+local Library = DarkraiX:Window("Mythril Hub ♦️    "," A Universal Time","",Enum.KeyCode[getgenv().ToggleUI]);
+-----------------------------------[[ Main Ui Libs ]]------------------------------------------------------------------
 
-local Toggle = LocalPlayerStuff:Toggle({Name = "Super Walkspeed",Flag = "Toggle",Callback = function(Value)
+BoredLibrary.prompt("Mythril Hub  ♦️","Current Version: "..getgenv().CurrentVersion,1.5);
+Home = Library:Tab("Home");
+Fighting = Library:Tab("Fighting");
+Farming = Library:Tab("Farming");
+Quests = Library:Tab("Farming");
+Teleports = Library:Tab("Teleports");
+
+---------------------------------[[ Main Source Code 💞 ]]------------------------------------------------------------
+Home:Seperator("Local Player Stuff");
+Home:Toggle("Super Walkspeed",false,function(Value)
     getgenv().WalkspeedBypass = Value
 
     -- Got From https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source
@@ -53,9 +55,9 @@ local Toggle = LocalPlayerStuff:Toggle({Name = "Super Walkspeed",Flag = "Toggle"
             task.wait(0.0015);
         end
     end)
-end})
+end)
 
-local Toggle = LocalPlayerStuff:Toggle({Name = "Super JumpPower",Flag = "Toggle",Callback = function(Value)
+Home:Toggle("Super Jumppower",false,function(Value)
     getgenv().JumpPowerBypass = Value;
 
     task.spawn(function()
@@ -68,14 +70,14 @@ local Toggle = LocalPlayerStuff:Toggle({Name = "Super JumpPower",Flag = "Toggle"
             task.wait(0.0015);
         end
     end)
-end})
+end)
 
-local Button = LocalPlayerStuff:Button({Name = "Reset Character",Callback = function()
+Home:Button("Reset Character",function()
 	game.Players.LocalPlayer.Character.Humanoid.Health = 0;
-end})
+end)
 
-local VisualScripts = HomeTab:Section({Name = "Visual Scripts",column = 2});
-local Toggle = VisualScripts:Toggle({Name = "Esp Players",Flag = "Toggle",Callback = function(Value)
+Home:Seperator("Visual Scripts");
+Home:Toggle("Esp Players",false,function(Value)
     getgenv().EspPlayers = Value;
 
     local Folder = workspace.Living
@@ -164,9 +166,9 @@ local Toggle = VisualScripts:Toggle({Name = "Esp Players",Flag = "Toggle",Callba
     Folder.ChildAdded:Connect(function(v)
         task.wait(0.5);XAdded(v);
     end)
-end})
+end)
 
-local Toggle = VisualScripts:Toggle({Name = "Esp Entities",Flag = "Toggle",Callback = function(Value)
+Home:Toggle("Esp Entities",false,function(Value)
 	getgenv().EspEntities = Value;
 
     local Folder = workspace.Living
@@ -260,9 +262,9 @@ local Toggle = VisualScripts:Toggle({Name = "Esp Entities",Flag = "Toggle",Callb
     Folder.ChildAdded:Connect(function(v)
         task.wait(0.5);XAdded(v);
     end)
-end})
+end)
 
-local Button = VisualScripts:Button({Name = "Jumpscare",Callback = function()
+Home:Button("Jumpscare",function()
     task.spawn(function()
         local ScreenGui = Instance.new("ScreenGui");
         ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui");
@@ -288,10 +290,32 @@ local Button = VisualScripts:Button({Name = "Jumpscare",Callback = function()
         Sound.Parent = game.Workspace
         Sound:Play();
     end)
-end})
+end)
 
-local MainAutofarm = FarmingTab:Section({Name = "Main Autofarm",column = 1});
-local Toggle = MainAutofarm:Toggle({Name = "Auto Complete Zoro Quest",Flag = "Toggle",Callback = function(Value)
+Farming:Seperator("Auto Farming Features");
+Farming:Dropdown("Select Stats",{"Special","Defense","Health","Attack"},function(Value)
+    getgenv().WantedStats = Value;
+end)
+
+Farming:Toggle("Auto Apply Stats",false,function(Value)
+    getgenv().AutoUsingStats = Value;
+
+    task.spawn(function()
+        while getgenv().AutoUsingStats == true do
+            pcall(function()
+                local Stats = {Special = 0,Defense = 0,Health = 0,Attack = 0};
+                for _,x in ipairs(getgenv().WantedStats or {}) do
+                    Stats[x] = 1;
+                end
+                local args = {[1] = 1,[2] = Stats};
+                game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("StatService"):WaitForChild("RF"):WaitForChild("ApplyStats"):InvokeServer(unpack(args));
+            end)
+            task.wait(0.35);
+        end
+    end)
+end)
+
+Farming:Toggle("Auto Complete Zoro Quest",false,function(Value)
     getgenv().AutoCompleteZoroQuest = Value;
 
     task.spawn(function()
@@ -304,7 +328,7 @@ local Toggle = MainAutofarm:Toggle({Name = "Auto Complete Zoro Quest",Flag = "To
                 local args = {[1] = "Zoros_Swords_Adventure"};
                 game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF"):WaitForChild("CheckDialogue"):InvokeServer(unpack(args));
                 game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF"):WaitForChild("PickedUpSword"):InvokeServer();
-                game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF"):WaitForChild("PickedUpSword"):InvokeServer();
+ game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF"):WaitForChild("PickedUpSword"):InvokeServer();
                 local args = {[1] = "Zoros_Swords_Adventure"};
                 game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF"):WaitForChild("CheckDialogue"):InvokeServer(unpack(args));
                 game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF"):WaitForChild("PickedUpSword"):InvokeServer();
@@ -312,12 +336,12 @@ local Toggle = MainAutofarm:Toggle({Name = "Auto Complete Zoro Quest",Flag = "To
                 game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF"):WaitForChild("CheckDialogue"):InvokeServer(unpack(args));
                 game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF"):WaitForChild("PickedUpSword"):InvokeServer();
             end)
-            task.wait(0.00005);
+            task.wait(0.005);
         end
     end)
-end})
+end)
 
-local Toggle = MainAutofarm:Toggle({Name = "Auto One Shot Npcs (Optional)",Flag = "Toggle",Callback = function(Value)
+Farming:Toggle("Auto One Shot Npcs (Optional)",false,function(Value)
     getgenv().AutoOneShotting = Value;
 
     task.spawn(function()
@@ -338,9 +362,9 @@ local Toggle = MainAutofarm:Toggle({Name = "Auto One Shot Npcs (Optional)",Flag 
             end
         end)
     end)
-end})
+end)
 
-local Toggle = MainAutofarm:Toggle({Name = "Auto Ascend Abillity",Flag = "Toggle",Callback = function(Value)
+Farming:Toggle("Auto Ascend Current Abillity",false,function(Value)
     getgenv().AutoAscending = Value;
 
     task.spawn(function()
@@ -354,9 +378,9 @@ local Toggle = MainAutofarm:Toggle({Name = "Auto Ascend Abillity",Flag = "Toggle
             task.wait(0.35);
         end
     end)
-end})
+end)
 
-local Toggle = MainAutofarm:Toggle({Name = "Auto Kill Prisoners",Flag = "Toggle",Callback = function(Value)
+Farming:Toggle("Auto Kill Fleeing Prisoners",false,function(Value)
     getgenv().AutoFastestFarm = Value;
 
     local FloatPart = Instance.new("Part",game.Workspace);
@@ -420,7 +444,7 @@ local Toggle = MainAutofarm:Toggle({Name = "Auto Kill Prisoners",Flag = "Toggle"
     task.spawn(function()
         while getgenv().AutoFastestFarm == true do
             pcall(function()
-                if getgenv().Target and not game.Players[game.Players.LocalPlayer.Name].Cooldowns:FindFirstChild("Rush Attack") and game.Players.LocalPlayer.Character.Humanoid.Health ~= 0 then
+                if getgenv().FoundAnything == true and not game.Players[game.Players.LocalPlayer.Name].Cooldowns:FindFirstChild("Rush Attack") and game.Players.LocalPlayer.Character.Humanoid.Health ~= 0 then
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(getgenv().Target.HumanoidRootPart.Position - Vector3.new(0,6.5,0),getgenv().Target.HumanoidRootPart.Position);
                     task.spawn(function()
                         local args = {[1] = "MouseButton1"};
@@ -434,151 +458,17 @@ local Toggle = MainAutofarm:Toggle({Name = "Auto Kill Prisoners",Flag = "Toggle"
             task.wait(0.0000000000015);
         end
     end)
-end})
+end)
 
-local AutoTraitStuff = FarmingTab:Section({Name = "Auto Pick Traits",column = 2});
-local DropDown = AutoTraitStuff:Dropdown({Default = "Select Legendary Traits",Content = {"Prime","Solar","Cursed","Vampiric","Gluttonous","Voided","Gambler","Overflowing","Deferred","True","Cultivation","Economic","Angelic"},MultiChoice = true,Flag = "Dropdown",Callback = function(Value)
-    getgenv().WantedLegendaryTraits = Value;
-end})
-
-local DropDown = AutoTraitStuff:Dropdown({Default = "Select Mythics Traits",Content = {"Godly","Temporal","Spiritual","Ryoiki","RCT"},MultiChoice = true,Flag = "Dropdown",Callback = function(Value)
-    getgenv().WantedMythicTraits = Value;
-end})
-
-local DropDown = AutoTraitStuff:Dropdown({Default = "Select Hexxed Traits",Content = {"Overconfident Prime","Icarus Solar","Undying Cursed","Ancient Vampiric","Festering Gluttonous","Abyssal Voided","Idle Death Gambler","Torrential Overflowing","Fractured Deferred","Vitriolic True","Soul Reaping Cultivation","Greedy Economic","Fallen Angelic","Egotistic Godly","FTL Temporal","Psychotic Spiritual","Heavenly Restricted Ryoiki","Automatic RCT"},MultiChoice = true,Flag = "Dropdown",Callback = function(Value)
-    getgenv().WantedHexxedTraits = Value;
-end})
-
-local Toggle = AutoTraitStuff:Toggle({Name = "Auto Collect Traits",Flag = "Toggle",Callback = function(Value)
-    getgenv().AutoPickingTraits = Value;
-
-    task.spawn(function()
-        while getgenv().AutoPickingTraits == true do
-            pcall(function()
-                local RevealEverything = game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHands.ShowAll.TextLabel;
-                local OpenTraitMenu = game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.MoveHandPrompt.TextLabel;
-                local TraitHolder = game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHands.Holder;
-                local DiscardTrait = game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHands.Discard.TextLabel;
-            
-                if game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHandPrompt.Visible == true then
-                    game:GetService("VirtualInputManager"):SendMouseButtonEvent(OpenTraitMenu.AbsolutePosition.X+OpenTraitMenu.AbsoluteSize.X/5,OpenTraitMenu.AbsolutePosition.Y+45,0,true,OpenTraitMenu,5);
-                    game:GetService("VirtualInputManager"):SendMouseButtonEvent(OpenTraitMenu.AbsolutePosition.X+OpenTraitMenu.AbsoluteSize.X/5,OpenTraitMenu.AbsolutePosition.Y+45,0,false,OpenTraitMenu,5);
-                end
-                task.wait(1.57);
-                if game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHands.Visible == true and game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHands.ShowAll.Visible == true then
-                    game:GetService("VirtualInputManager"):SendMouseButtonEvent(RevealEverything.AbsolutePosition.X+RevealEverything.AbsoluteSize.X/5,RevealEverything.AbsolutePosition.Y+50,0,true,RevealEverything,5);
-                    game:GetService("VirtualInputManager"):SendMouseButtonEvent(RevealEverything.AbsolutePosition.X+RevealEverything.AbsoluteSize.X/5,RevealEverything.AbsolutePosition.Y+50,0,false,RevealEverything,5);
-                end
-
-                local TraitHolders = {
-                    TraitHolder["1"].Content.Title.Label,
-                    TraitHolder["2"].Content.Title.Label,
-                    TraitHolder["3"].Content.Title.Label,
-                }
-
-                if game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHands.Visible == true then
-                    local FoundTrait = false;
-                    for _,v in ipairs(TraitHolders) do
-                        for _,x in ipairs(getgenv().WantedLegendaryTraits or getgenv().WantedMythicTraits or getgenv().WantedHexxedTraits) do
-                            if v.Text:match(x) then FoundTrait = true;
-                                game:GetService("VirtualInputManager"):SendMouseButtonEvent(v.AbsolutePosition.X + v.AbsoluteSize.X/5,v.AbsolutePosition.Y + 50,0,true,v,5);
-                                game:GetService("VirtualInputManager"):SendMouseButtonEvent(v.AbsolutePosition.X + v.AbsoluteSize.X/5,v.AbsolutePosition.Y + 50,0,false,v,5);
-                                task.wait(0.51);for _,x in ipairs(game:GetService("Players").LocalPlayer.PlayerGui.UI.Prompt.Frame.Buttons:GetChildren()) do
-                                    if x:IsA("TextButton") then
-                                        if x:FindFirstChildOfClass("TextLabel").Text == "Yes" then
-                                            game:GetService("VirtualInputManager"):SendMouseButtonEvent(x.AbsolutePosition.X + x.AbsoluteSize.X/5,x.AbsolutePosition.Y + 50,0,true,x,5);
-                                            game:GetService("VirtualInputManager"):SendMouseButtonEvent(x.AbsolutePosition.X + x.AbsoluteSize.X/5,x.AbsolutePosition.Y + 50,0,false,x,5);
-                                        end
-                                    end
-                                    task.spawn(function()task.wait(5.15);
-                                        getgenv().AutoPickingTraits = false;
-                                    end)
-                                end
-                            end
-                        end
-                    end
-                    if not FoundTrait then
-                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(DiscardTrait.AbsolutePosition.X+DiscardTrait.AbsoluteSize.X/5,DiscardTrait.AbsolutePosition.Y+50,0,true,DiscardTrait,5);
-                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(DiscardTrait.AbsolutePosition.X+DiscardTrait.AbsoluteSize.X/5,DiscardTrait.AbsolutePosition.Y+50,0,false,DiscardTrait,5);
-                        task.wait(0.51);for _,x in ipairs(game:GetService("Players").LocalPlayer.PlayerGui.UI.Prompt.Frame.Buttons:GetChildren()) do
-                            if x:IsA("TextButton") then
-                                if x:FindFirstChildOfClass("TextLabel").Text == "Yes" then
-                                    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x.AbsolutePosition.X + x.AbsoluteSize.X/5,x.AbsolutePosition.Y + 50,0,true,x,5);
-                                    game:GetService("VirtualInputManager"):SendMouseButtonEvent(x.AbsolutePosition.X + x.AbsoluteSize.X/5,x.AbsolutePosition.Y + 50,0,false,x,5);
-                                end
-                            end
-                        end
-                    end
-                end
-            end)
-            task.wait(0.15);
-        end
-    end)
-end})
-
-local AutoItemStuff = FarmingTab:Section({Name = "Auto Storing Items",column = 2});
-local DropDown = AutoItemStuff:Dropdown({Default = "Select Normal Items",Content = {"Pumpkin","Bone","Watch","Tales of the Universe","Azakana Mask","Ancient Sword","Dragon Ball","Cursed Orb","Monochromatic Orb","Kinetic Orb","Mysterious Fragment","Bisento","Ope Devil Fruit","Mero Devil Fruit"},MultiChoice = true,Flag = "Dropdown",Callback = function(Value)
-    getgenv().WantedNormalItems = Value;
-end})
-
-local DropDown = AutoItemStuff:Dropdown({Default = "Select Bosses Items",Content = {"Bouquet Of Flowers","Law's Cap","Golden Hook","Suna Devil Fruit","Gojo's Blindfold","Sukuna's Finger","Slime Energy","Knight's Sword"},MultiChoice = true,Flag = "Dropdown",Callback = function(Value)
-    getgenv().WantedBossItems = Value;
-end})
-
-local Toggle = AutoItemStuff:Toggle({Name = "Auto Store Items",Flag = "Toggle",Callback = function(Value)
-    getgenv().AutoStoreItems = Value;
-
-    task.spawn(function()
-        while getgenv().AutoStoreItems == true do
-            pcall(function()
-                for _,x in ipairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
-                    for _,k in ipairs(getgenv().WantedNormalItems or getgenv().WantedBossItems) do
-                        if x.Name == k then
-                            game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid"):EquipTool(x);
-                            local args = {[1] = {["AddItems"] = true}};
-                            game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("InventoryService"):WaitForChild("RE"):WaitForChild("ItemInventory"):FireServer(unpack(args));
-                            task.wait(0.15);game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid"):UnequipTools();
-                        end
-                    end
-                end
-            end)
-            task.wait(0.25);
-        end
-    end)
-end})
-
-local AutoStatStuff = FarmingTab:Section({Name = "Auto Use Stats",column = 1});
-local DropDown = AutoStatStuff:Dropdown({Default = "Select Stats",Content = {"Special","Defense","Health","Attack"},MultiChoice = true,Flag = "Dropdown",Callback = function(Value)
-    getgenv().WantedStats = Value;
-end})
-
-local Toggle = AutoStatStuff:Toggle({Name = "Auto Apply Stats",Flag = "Toggle",Callback = function(Value)
-    getgenv().AutoUsingStats = Value;
-
-    task.spawn(function()
-        while getgenv().AutoUsingStats == true do
-            pcall(function()
-                local Stats = {Special = 0,Defense = 0,Health = 0,Attack = 0};
-                for _,x in ipairs(getgenv().WantedStats or {}) do
-                    Stats[x] = 1;
-                end
-                local args = {[1] = 1,[2] = Stats};
-                game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("StatService"):WaitForChild("RF"):WaitForChild("ApplyStats"):InvokeServer(unpack(args));
-            end)
-            task.wait(0.35);
-        end
-    end)
-end})
-
-local AutoMobStuff = FarmingTab:Section({Name = "Auto Farming Mobs",column = 1});
-local Toggle = AutoMobStuff:Toggle({Name = "Auto Kill Curses",Flag = "Toggle",Callback = function(Value)
+Farming:Seperator("Auto Farming Mobs");
+Farming:Toggle("Auto Kill Curses",false,function(Value)
     getgenv().AutofarmingCursedMobs = Value;
 
     task.spawn(function()
         while getgenv().AutofarmingCursedMobs == true do
             pcall(function()
                 if game.Players.LocalPlayer.Character.Humanoid.Health ~= 0 then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1980.7568359375,935.0916748046875,-1499.26416015625);task.wait(1.45);
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1980.7568359375,935.0916748046875,-1499.26416015625);task.wait(0.45);
                 else
                     task.wait(6.5);
                 end
@@ -608,7 +498,7 @@ local Toggle = AutoMobStuff:Toggle({Name = "Auto Kill Curses",Flag = "Toggle",Ca
         connection = game:GetService("RunService").Heartbeat:Connect(function()
             if getgenv().AutofarmingCursedMobs == true then
                 pcall(function()
-                    if getgenv().Targetz and not game.Players[game.Players.LocalPlayer.Name].Cooldowns:FindFirstChild("Rush Attack") and game.Players.LocalPlayer.Character.Humanoid.Health ~= 0 then
+                    if getgenv().FoundAnythingz == true and not game.Players[game.Players.LocalPlayer.Name].Cooldowns:FindFirstChild("Rush Attack") and game.Players.LocalPlayer.Character.Humanoid.Health ~= 0 then
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(getgenv().Targetz.Head.Position - Vector3.new(0,-4,0),getgenv().Targetz.Head.Position);
                         task.spawn(function()
                             local args = {[1] = "MouseButton1"};
@@ -624,14 +514,13 @@ local Toggle = AutoMobStuff:Toggle({Name = "Auto Kill Curses",Flag = "Toggle",Ca
             task.wait(1);
         end)
     end)
-end})
+end)
 
-local Label = AutoMobStuff:Label("Auto Pick Chests");
-local DropDown = AutoMobStuff:Dropdown({Default = "Select Chest", Content = {"Common","Epic","Rare","Legendary"}, MultiChoice = true, Flag = "Dropdown", Callback = function(Value)
+Farming:Dropdown("Select Chest",{"Common","Epic","Rare","Legendary"},function(Value)
     getgenv().TryToFind = Value;
-end})
+end)
 
-local Toggle = AutoMobStuff:Toggle({Name = "Auto Collect Chests",Flag = "Toggle",Callback = function(Value)
+Farming:Toggle("Auto Collect Chests",false,function(Value)
     getgenv().AutoCollectChests = Value;
 
     task.spawn(function()
@@ -691,14 +580,14 @@ local Toggle = AutoMobStuff:Toggle({Name = "Auto Collect Chests",Flag = "Toggle"
             task.wait(1);
         end)
     end)
-end})
+end)
 
-local Label = AutoMobStuff:Label("Auto Selling Items");
-local Slider = AutoMobStuff:Slider({Name = "Sell Delay",Min = 5,Max = 150,Default = 15,Flag = "Slider",Callback = function(Value)
+Farming:Seperator("Auto Selling Items");
+Farming:Slider("Sell Delay",10,150,15,function(Value)
     getgenv().DelaySelling = Value;
-end})
+end)
 
-local Toggle = AutoMobStuff:Toggle({Name = "Auto Sell Inventory",Flag = "Toggle",Callback = function(Value)
+Farming:Toggle("Auto Sell Inventory",false,function(Value)
     getgenv().AutoSellingItems = Value;
 
     task.spawn(function()
@@ -718,4 +607,120 @@ local Toggle = AutoMobStuff:Toggle({Name = "Auto Sell Inventory",Flag = "Toggle"
             task.wait(getgenv().DelaySelling);
         end
     end)
-end})
+end)
+
+Farming:Seperator("Auto Storing Items");
+Farming:Dropdown("Select Normal Items",{"Pumpkin","Bone","Watch","Tales of the Universe","Azakana Mask","Ancient Sword","Dragon Ball","Cursed Orb","Monochromatic Orb","Kinetic Orb","Mysterious Fragment","Bisento","Ope Devil Fruit","Mero Devil Fruit"},function(Value)
+    getgenv().WantedNormalItems = Value;
+end)
+
+Farming:Dropdown("Select Boss Items",{"Bouquet Of Flowers","Law's Cap","Golden Hook","Suna Devil Fruit","Gojo's Blindfold","Sukuna's Finger","Slime Energy","Knight's Sword"},function(Value)
+    getgenv().WantedBossItems = Value;
+end)
+
+Farming:Toggle("Auto Store Items",false,function(Value)
+    getgenv().AutoStoreItems = Value;
+
+    task.spawn(function()
+        while getgenv().AutoStoreItems == true do
+            pcall(function()
+                for _,x in ipairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+                    for _,k in ipairs(getgenv().WantedNormalItems and getgenv().WantedBossItems) do
+                        if x.Name == k then
+                            game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid"):EquipTool(x);
+                            local args = {[1] = {["AddItems"] = true}};
+                            game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("InventoryService"):WaitForChild("RE"):WaitForChild("ItemInventory"):FireServer(unpack(args));
+                            task.wait(0.15);game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid"):UnequipTools();
+                        end
+                    end
+                end
+            end)
+            task.wait(0.25);
+        end
+    end)
+end)
+
+Farming:Seperator("Auto Pick Trats");
+Farming:Dropdown("Select Legendary Traits",{"Prime","Solar","Cursed","Vampiric","Gluttonous","Voided","Gambler","Overflowing","Deferred","True","Cultivation","Economic","Angelic"},function(Value)
+    getgenv().WantedLegendaryTraits = Value;
+end)
+
+Farming:Dropdown("Select Mythical Traits",{"Godly","Temporal","Spiritual","Ryoiki","RCT"},function(Value)
+    getgenv().WantedMythicTraits = Value;
+end)
+
+Farming:Dropdown("Select Normal Items",{"Overconfident Prime","Icarus Solar","Undying Cursed","Ancient Vampiric","Festering Gluttonous","Abyssal Voided","Idle Death Gambler","Torrential Overflowing","Fractured Deferred","Vitriolic True","Soul Reaping Cultivation","Greedy Economic","Fallen Angelic","Egotistic Godly","FTL Temporal","Psychotic Spiritual","Heavenly Restricted Ryoiki","Automatic RCT"},function(Value)
+    getgenv().WantedHexxedTraits = Value;
+end)
+
+Farming:Toggle("Auto Collect Traits",false,function(Value)
+    getgenv().AutoPickingTraits = Value;
+
+    task.spawn(function()
+        while getgenv().AutoPickingTraits == true do
+            pcall(function()
+                local RevealEverything = game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHands.ShowAll.TextLabel;
+                local OpenTraitMenu = game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.MoveHandPrompt.TextLabel;
+                local DiscardTrait = game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHands.Discard.TextLabel;
+                
+                local FoundTrait = nil;local SelectTrait = nil;
+                for i = 1,3 do
+                    local Trait = game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHands.Holder[tostring(i)].Content.Title.Label;
+
+                    for _,x in ipairs(getgenv().WantedLegendaryTraits and getgenv().WantedMythicTraits and getgenv().WantedHexxedTraits) do
+                        if Trait.Text:match(x) then
+                            FoundTrait = i;SelectTrait = game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHands.Holder[tostring(i)];
+                        end
+                    end
+                end
+
+                if game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHandPrompt.Visible == true then
+                    pcall(function()
+                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(OpenTraitMenu.AbsolutePosition.X+OpenTraitMenu.AbsoluteSize.X/1,OpenTraitMenu.AbsolutePosition.Y+45,0,true,OpenTraitMenu,1);
+                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(OpenTraitMenu.AbsolutePosition.X+OpenTraitMenu.AbsoluteSize.X/1,OpenTraitMenu.AbsolutePosition.Y+45,0,false,OpenTraitMenu,1);
+                    end)
+                end
+                
+                task.wait(0.95);
+                
+                if game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHands.Visible == true and game:GetService("Players").LocalPlayer.PlayerGui.UI.Gameplay.TraitHands.ShowAll.Visible == true then
+                    pcall(function()
+                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(RevealEverything.AbsolutePosition.X+RevealEverything.AbsoluteSize.X/1,RevealEverything.AbsolutePosition.Y+50,0,true,RevealEverything,1);
+                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(RevealEverything.AbsolutePosition.X+RevealEverything.AbsoluteSize.X/1,RevealEverything.AbsolutePosition.Y+50,0,false,RevealEverything,1);
+                    end)
+                end
+                  
+                if FoundTrait then
+                    game:GetService("VirtualInputManager"):SendMouseButtonEvent(SelectTrait.AbsolutePosition.X + SelectTrait.AbsoluteSize.X/1,SelectTrait.AbsolutePosition.Y + 50,0,true,SelectTrait,1);
+                    game:GetService("VirtualInputManager"):SendMouseButtonEvent(SelectTrait.AbsolutePosition.X + SelectTrait.AbsoluteSize.X/1,SelectTrait.AbsolutePosition.Y + 50,0,false,SelectTrait,1);
+                    task.wait(0.75);for _,x in ipairs(game:GetService("Players").LocalPlayer.PlayerGui.UI.Prompt.Frame.Buttons:GetChildren()) do
+                        if x:IsA("TextButton") then
+                            if x:FindFirstChildOfClass("TextLabel").Text == "Yes" then
+                                game:GetService("VirtualInputManager"):SendMouseButtonEvent(x.AbsolutePosition.X + x.AbsoluteSize.X/1,x.AbsolutePosition.Y + 50,0,true,x,1);
+                                game:GetService("VirtualInputManager"):SendMouseButtonEvent(x.AbsolutePosition.X + x.AbsoluteSize.X/1,x.AbsolutePosition.Y + 50,0,false,x,1);
+                            end
+                        end
+                    end
+                else
+                    game:GetService("VirtualInputManager"):SendMouseButtonEvent(DiscardTrait.AbsolutePosition.X+DiscardTrait.AbsoluteSize.X/1,DiscardTrait.AbsolutePosition.Y+50,0,true,DiscardTrait,1);
+                    game:GetService("VirtualInputManager"):SendMouseButtonEvent(DiscardTrait.AbsolutePosition.X+DiscardTrait.AbsoluteSize.X/1,DiscardTrait.AbsolutePosition.Y+50,0,false,DiscardTrait,1);
+                    task.wait(0.75);for _,x in ipairs(game:GetService("Players").LocalPlayer.PlayerGui.UI.Prompt.Frame.Buttons:GetChildren()) do
+                        if x:IsA("TextButton") then
+                            if x:FindFirstChildOfClass("TextLabel").Text == "Yes" then
+                                game:GetService("VirtualInputManager"):SendMouseButtonEvent(x.AbsolutePosition.X + x.AbsoluteSize.X/1,x.AbsolutePosition.Y + 50,0,true,x,1);
+                                game:GetService("VirtualInputManager"):SendMouseButtonEvent(x.AbsolutePosition.X + x.AbsoluteSize.X/1,x.AbsolutePosition.Y + 50,0,false,x,1);
+                            end
+                        end
+                    end
+                end
+            end)
+            task.wait(1.35);
+        end
+    end)
+end)
+
+Fighting:Seperator("Coming Soon!");
+
+Quests:Seperator("Coming Soon!");
+
+Teleports:Seperator("Coming Soon!");
