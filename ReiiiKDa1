@@ -546,7 +546,7 @@ Farming:Toggle("Auto Kill Guardian",false,function(Value)
             if getgenv().AutoGuardian == true then
                 pcall(function()
                     if getgenv().FoundAnythingz == true and not game.Players[game.Players.LocalPlayer.Name].Cooldowns:FindFirstChild("Rush Attack") and game.Players.LocalPlayer.Character.Humanoid.Health ~= 0 then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(getgenv().Targetz.Head.Position - Vector3.new(0,-4,0),getgenv().Targetz.Head.Position);
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(getgenv().Targetz.Head.Position - Vector3.new(0, 4, 0),getgenv().Targetz.Head.Position);
                         task.spawn(function()
                             local args = {[1] = "MouseButton1"};
                             game:GetService("ReplicatedStorage"):WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit"):WaitForChild("Services"):WaitForChild("MoveInputService"):WaitForChild("RF"):WaitForChild("FireInput"):InvokeServer(unpack(args));
