@@ -1,0 +1,291 @@
+-- Load DarkraiX Library
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/ry59CnUE"))()
+local Window = Library:Window("vezrr & crtrz gui", "yba killer :skull:", "rbxassetid://1234567890", Enum.KeyCode.RightShift)
+
+-- Create Tabs
+local MainTab = Window:Tab("Main")
+local StandTab = Window:Tab("Stand")
+local TeleportTab = Window:Tab("Teleports")
+local ServerTab = Window:Tab("Server")
+local OtherTab = Window:Tab("Other")
+
+-- Services and Player Setup
+local Player = game.Players.LocalPlayer
+local Character = Player.Character or Player.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+local RemoteEvent = Character:WaitForChild("RemoteEvent")
+local RemoteFunction = Character:FindFirstChild("RemoteFunction")
+local CurrentCamera = workspace.CurrentCamera
+local PlayerGui = Player:FindFirstChild("PlayerGui")
+
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local TeleportService = game:GetService("TeleportService")
+
+-- Temporary Storage
+local TempStore = Instance.new("Folder", game.ReplicatedStorage)
+TempStore.Name = "TempStorage"
+local StayInPilot = Instance.new("BoolValue", workspace)
+StayInPilot.Value = false
+
+-- Settings Table
+getgenv().settings = {
+    ["cachedbodyparts"] = {},
+    ["noclip"] = false,
+    ["invisenabled"] = nil,
+    ["antits"] = nil,
+    ["inviskey"] = Enum.KeyCode.L,
+    ["oldpos"] = nil,
+    ["delay"] = 0.8,
+    ["crasher"] = false,
+    ["customval"] = 2000,
+    ["standspeed"] = 1.5,
+    ["pilotjumppower"] = 1.5,
+    ["hidebody"] = true,
+    ["tpbodytostand"] = true,
+    ["bodydistance"] = 37,
+    ["pilotkey"] = Enum.KeyCode.H,
+    ["currentargs"] = nil,
+    ["flingtarget"] = nil,
+    ["animationlist"] = {},
+    ["1"] = nil,
+    ["2"] = nil,
+    ["3"] = nil,
+    ["4"] = nil,
+    ["5"] = nil,
+    ["6"] = nil,
+    ["7"] = nil,
+    ["8"] = nil,
+    ["9"] = nil,
+    ["target"] = nil,
+    ["attach"] = false,
+    ["distancefr"] = 2,
+    ["god"] = nil,
+    ["kidnaptarget"] = nil,
+    ["teleportpos"] = CFrame.new(0, -500, 0),
+    ["movementpredictionstrength"] = 0.35,
+    ["timeout"] = 1,
+    ["useinvis"] = true
+}
+
+-- Teleports Table
+settings.teleports = {
+    ["Newbie Giorno"] = CFrame.new(1, 0, -697),
+    ["Train Station Side 1"] = CFrame.new(-214, 0, 18),
+    ["Train Station Side 2"] = CFrame.new(-265, -30, -447),
+    ["Pizza Place"] = CFrame.new(113, 6, 71),
+    ["The Arcade"] = CFrame.new(255, 5, -239),
+    ["The Cafe"] = CFrame.new(-544, -25, -174),
+    ["Diavolo"] = CFrame.new(1126, 116, -129),
+    ["Dio P3"] = CFrame.new(-44, 0, -973),
+    ["Jotaro P3"] = CFrame.new(182, -25, 578),
+    ["Jotaro P6"] = CFrame.new(784, -42, 144),
+    ["Tallest Peak"] = CFrame.new(-237, 284, 305),
+    ["Hamon Merchant"] = CFrame.new(421, 8, -287),
+    ["Boxing Merchant"] = CFrame.new(281, 0, 101),
+    ["Pluck Merchant"] = CFrame.new(125, -27, 438),
+    ["Heaven Dimension"] = CFrame.new(8553, -479, 8154),
+    ["Arrowsmith"] = CFrame.new(-667, 16, -299),
+    ["Cosmetics Merchants"] = CFrame.new(512, 2, 22),
+    ["Leaky Eye Luca"] = CFrame.new(-382, 0, -711),
+    ["Chad"] = CFrame.new(-121, -24, 524),
+    ["Brad the Bat Merchant"] = CFrame.new(-14, -0, -286),
+    ["Dracula"] = CFrame.new(-420, -34, -75),
+    ["Kars"] = CFrame.new(264, -33, 112),
+    ["Homeless Man Jill"] = CFrame.new(-142, -31, -577),
+    ["Vampire Room"] = CFrame.new(391, -31, -166),
+    ["Enrico Pucci"] = CFrame.new(917, 34, -17),
+    ["Safe Spot"] = CFrame.new(-452, -20, 206)
+}
+
+-- Populate Animation List
+for i,v in game.ReplicatedStorage.Anims:GetDescendants() do
+    if v:IsA("Animation") and v.Parent.Name ~= "Poses" then
+        table.insert(settings["animationlist"], v.Name)
+    end
+end
+
+-- Main Tab Features
+
+-- Invisibility Toggle
+MainTab:Toggle("Invisibility", false, function(t)
+    if t then
+        local IsInvisibile
+        settings["invisenabled"] = UserInputService.InputBegan:Connect(function(Input, GameProccessed)
+            if GameProccessed then return end
+            if Input.KeyCode ~= settings["inviskey"] then return end
+
+            if IsInvisibile then
+                Uninvisible()
+            else
+                Invisibile()
+            end
+
+            IsInvisibile = not IsInvisibile
+        end)
+    else
+        if settings["invisenabled"] then
+            settings["invisenabled"]:Disconnect()
+            Uninvisible()
+        end
+    end
+end)
+
+-- Invisibility Key TextBox
+MainTab:Textbox("Invisibility Key", "L", false, function(text)
+    settings["inviskey"] = Enum.KeyCode[text:upper()]
+end)
+
+-- Godmode Toggle
+MainTab:Toggle("Godmode", false, function(t)
+    if t then
+        Character.Archivable = true
+        local ControlCharacter = Character:Clone()
+        ControlCharacter.Parent = workspace
+        ControlCharacter.PrimaryPart.CFrame = ControlCharacter.PrimaryPart.CFrame
+
+        MakeInvisible(ControlCharacter)
+        ControlHumanoid(ControlCharacter, WalkSpeed)
+        RemoteEvent:FireServer("Poison", {Duration = math.huge, TotalDamage = math.huge})
+    else
+        if settings["god"] then
+            workspace:FindFirstChild(Player.Name):Destroy()
+            settings["god"]:Disconnect()
+            Humanoid.Health = 0
+        end
+    end
+end)
+
+-- No-Clip Toggle
+MainTab:Toggle("No-Clip", false, function(t)
+    settings["noclip"] = t
+    if settings["noclip"] then
+        if Character then
+            for i,v in Character:GetChildren() do
+                if v:IsA("BasePart") and v.CanCollide then
+                    table.insert(settings["cachedbodyparts"], v.Name)
+                    v.CanCollide = false 
+                end  
+            end
+        end
+    else
+        for i,v in settings["cachedbodyparts"] do
+            Character[v].CanCollide = true
+        end
+    end
+end)
+
+-- Player Crasher/Server Lagger Toggle
+MainTab:Toggle("Player Crasher/Server Lagger", false, function(t)
+    settings["crasher"] = t
+    if settings["crasher"] then
+        while settings["crasher"] do task.wait()
+            for i = settings["customval"], 1, -1 do
+                Player.Character.RemoteEvent:FireServer("Poison", {Duration = 10000, TotalDamage = 0.0001})
+                Player.Character.RemoteEvent:FireServer("Bleed", {Duration = 10000, TotalDamage = 0.0001})
+            end
+        end
+    else
+        task.wait(1)
+        Player.Character.RemoteEvent:FireServer("StopPoison")
+        Player.Character.RemoteEvent:FireServer("StopBleed")
+    end
+end)
+
+-- UI Toggle Keybind
+MainTab:Keybind("Toggle UI", Enum.KeyCode.RightShift, {"RightShift"}, function(key)
+    if key then
+        MainTab:Notification("Changed Toggle key to: ", key)
+    else
+        Window:ToggleUI()
+    end
+end)
+
+-- Stand Tab Features
+
+-- Stand Speed Slider
+StandTab:Slider("Stand Speed", 1, 10, 1.5, function(value)
+    settings["standspeed"] = value
+end)
+
+-- Pilot Jump Power Slider
+StandTab:Slider("Pilot Jump Power", 1, 10, 1.5, function(value)
+    settings["pilotjumppower"] = value
+end)
+
+-- Hide Body Toggle
+StandTab:Toggle("Hide Body", true, function(t)
+    settings["hidebody"] = t
+end)
+
+-- Auto Pilot Toggle
+StandTab:Toggle("Auto Pilot", false, function(t)
+    settings["tpbodytostand"] = t
+end)
+
+-- Fling Target TextBox
+StandTab:Textbox("Fling Target", "", true, function(text)
+    settings["flingtarget"] = text
+end)
+
+-- Stand Attack Keybind
+StandTab:Keybind("Stand Attack", Enum.KeyCode.F, {"F"}, function(key)
+    -- Attack Logic here
+end)
+
+-- Teleport Tab Features
+
+-- Predefined Locations Dropdown
+TeleportTab:Dropdown("Select Location", {"Newbie Giorno", "Train Station Side 1", "Train Station Side 2", "Pizza Place"}, function(selected)
+    HumanoidRootPart.CFrame = settings.teleports[selected]
+end)
+
+-- Server Tab Features
+
+-- Auto Lag Toggle
+ServerTab:Toggle("Auto Lag", false, function(t)
+    if t then
+        for i,v in pairs(settings.teleports) do
+            game:GetService("RunService").Stepped:Connect(function()
+                HumanoidRootPart.CFrame = v
+            end)
+        end
+    end
+end)
+
+-- Auto Kick Toggle
+ServerTab:Toggle("Auto Kick", false, function(t)
+    if t then
+        while task.wait(1) do
+            game.Players.LocalPlayer:Kick("Auto Kicked")
+        end
+    end
+end)
+
+-- Other Tab Features
+
+-- Fling Player
+OtherTab:Button("Fling Player", function()
+    -- Fling Player Logic here
+end)
+
+-- Animate Player Dropdown
+OtherTab:Dropdown("Select Animation", settings["animationlist"], function(selected)
+    -- Play Animation Logic here
+end)
+
+-- Pilot Key TextBox
+OtherTab:Textbox("Pilot Key", "H", false, function(text)
+    settings["pilotkey"] = Enum.KeyCode[text:upper()]
+end)
+
+-- Hide Body Toggle
+OtherTab:Toggle("Hide Body", true, function(t)
+    settings["hidebody"] = t
+end)
+
+-- Fling Strength Slider
+OtherTab:Slider("Fling Strength", 0, 10, 2, function(value)
+    settings["distancefr"] = value
+end)
