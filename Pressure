@@ -943,8 +943,8 @@ SaveManager:BuildConfigSection(Tabs.Settings)
 Window:SelectTab(1)
 
 Fluent:Notify({
-    Title = "cracked by 25ms | Join Discord",
-    Content = "https://discord.gg/AC85fM4Hp8",
+    Title = "RaT",
+    Content = "https://discord.gg/UfQytpR2Gx",
     Duration = 8
 })
 
