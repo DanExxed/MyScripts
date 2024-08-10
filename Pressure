@@ -1,6 +1,10 @@
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+local SaveManager =
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager =
+    loadstring(
+    game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua")
+)()
 
 local UserInputService = game:GetService("UserInputService")
 local lockerArray = {}
@@ -29,87 +33,105 @@ local keyCardEnabled = false
 local generatorEnabled = false
 local itemEnabled = false
 local doorEnabled = false
-local previousDoorESP  = nil 
+local previousDoorESP = nil
 local monsterLocker = {}
 local squiddles = {}
 local render = false
 local tempDoor = nil
 
-local Window = Fluent:CreateWindow({
-    Title = "RaT | pressure",
-    SubTitle = "RaT's Slaves",
-    TabWidth = 160,
-    Size = UDim2.fromOffset(580, 460),
-    Acrylic = true,
-    Theme = "Dark",
-    MinimizeKey = Enum.KeyCode.LeftControl
-})
+local Window =
+    Fluent:CreateWindow(
+    {
+        Title = "RaT | pressure",
+        SubTitle = "RaT's Slaves",
+        TabWidth = 160,
+        Size = UDim2.fromOffset(580, 460),
+        Acrylic = true,
+        Theme = "Dark",
+        MinimizeKey = Enum.KeyCode.LeftControl
+    }
+)
 
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "house-plus" }),
-    Visuals = Window:AddTab({ Title = "Visuals", Icon = "eye" }),
-    Teleports = Window:AddTab({ Title = "Teleports", Icon = "map" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    Main = Window:AddTab({Title = "Main", Icon = "house-plus"}),
+    Visuals = Window:AddTab({Title = "Visuals", Icon = "eye"}),
+    Teleports = Window:AddTab({Title = "Teleports", Icon = "map"}),
+    Settings = Window:AddTab({Title = "Settings", Icon = "settings"})
 }
 
 local Options = Fluent.Options
 
-Fluent:Notify({
-    Title = "RaT da goat",
-    Content = "beta test",
-    SubContent = "v1.00",
-    Duration = 5
-})
+Fluent:Notify(
+    {
+        Title = "RaT da goat",
+        Content = "beta test",
+        SubContent = "v1.00",
+        Duration = 5
+    }
+)
 
 local FullbrightToggle = Tabs.Visuals:AddToggle("Fullbright", {Title = "Full Brightness", Default = true})
-local DoorESP = Tabs.Visuals:AddToggle("DoorESP", { Title = "Doors esp", Default = false })
-local MonstersESP = Tabs.Visuals:AddToggle("MonstersESP", { Title = "monsters esp", Default = false })
-local ItemsESP = Tabs.Visuals:AddToggle("ItemsESP", { Title = "item ESP", Default = false })
-local KeyCardsESP = Tabs.Visuals:AddToggle("KeyCardsESP", { Title = "Key Cards ESP", Default = false })
-local GeneratorESP = Tabs.Visuals:AddToggle("GeneratorESP", { Title = "Generator ESP", Default = false })
-local DestroySquiddles = Tabs.Visuals:AddToggle("DestroySquiddles", { Title = "Remove Squiddles", Default = false })
-local DestroyMonsterLocker = Tabs.Visuals:AddToggle("DestroyMonsterLocker", { Title = "Remove MonsterLocker", Default = false })
-local MoneyFarm = Tabs.Visuals:AddToggle("MoneyFarm", {Title = "Farm Money", Description = "Hotkey : NumPad 5", Default = false})
+local DoorESP = Tabs.Visuals:AddToggle("DoorESP", {Title = "Doors esp", Default = false})
+local MonstersESP = Tabs.Visuals:AddToggle("MonstersESP", {Title = "monsters esp", Default = false})
+local ItemsESP = Tabs.Visuals:AddToggle("ItemsESP", {Title = "item ESP", Default = false})
+local KeyCardsESP = Tabs.Visuals:AddToggle("KeyCardsESP", {Title = "Key Cards ESP", Default = false})
+local GeneratorESP = Tabs.Visuals:AddToggle("GeneratorESP", {Title = "Generator ESP", Default = false})
+local DestroySquiddles = Tabs.Visuals:AddToggle("DestroySquiddles", {Title = "Remove Squiddles", Default = false})
+local DestroyMonsterLocker =
+    Tabs.Visuals:AddToggle("DestroyMonsterLocker", {Title = "Remove MonsterLocker", Default = false})
+local MoneyFarm =
+    Tabs.Visuals:AddToggle("MoneyFarm", {Title = "Farm Money", Description = "Hotkey : NumPad 5", Default = false})
 
-
-local WalkSpeedSlider = Tabs.Main:AddSlider("WalkSpeedSlider", {
-    Title = "Walk Speed",
-    Description = "Adjust the player's walk speed",
-    Default = 16,
-    Min = 0,
-    Max = 25,
-    Rounding = 1,
-    Callback = function(Value)
-        local player = game.Players.LocalPlayer
-        if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
-            player.Character.Humanoid.WalkSpeed = Value
+local WalkSpeedSlider =
+    Tabs.Main:AddSlider(
+    "WalkSpeedSlider",
+    {
+        Title = "Walk Speed",
+        Description = "Adjust the player's walk speed",
+        Default = 16,
+        Min = 0,
+        Max = 25,
+        Rounding = 1,
+        Callback = function(Value)
+            local player = game.Players.LocalPlayer
+            if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
+                player.Character.Humanoid.WalkSpeed = Value
+            end
         end
-    end
-})
+    }
+)
 
-WalkSpeedSlider:OnChanged(function(Value)
-end)
+WalkSpeedSlider:OnChanged(
+    function(Value)
+    end
+)
 
 WalkSpeedSlider:SetValue(16)
 
-local FOVSlider = Tabs.Main:AddSlider("FOVSlider", {
-    Title = "FOV",
-    Description = "Adjust the player's field of view",
-    Default = 70,
-    Min = 0,
-    Max = 120,
-    Rounding = 1,
-    Callback = function(Value)
-        local player = game.Players.LocalPlayer
-        if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
-            local camera = game.Workspace.CurrentCamera
-            camera.FieldOfView = Value
+local FOVSlider =
+    Tabs.Main:AddSlider(
+    "FOVSlider",
+    {
+        Title = "FOV",
+        Description = "Adjust the player's field of view",
+        Default = 70,
+        Min = 0,
+        Max = 120,
+        Rounding = 1,
+        Callback = function(Value)
+            local player = game.Players.LocalPlayer
+            if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
+                local camera = game.Workspace.CurrentCamera
+                camera.FieldOfView = Value
+            end
         end
-    end
-})
+    }
+)
 
-FOVSlider:OnChanged(function(Value)
-end)
+FOVSlider:OnChanged(
+    function(Value)
+    end
+)
 
 FOVSlider:SetValue(70)
 
@@ -137,10 +159,13 @@ local function findPreLastRoom()
     end
 end
 
-
 local function checkRenderCondition()
-    while true do 
-        if monstersEnabled or monsterLockerEnabled or searchLightEnabled or keyCardEnabled or generatorEnabled or itemEnabled or doorEnabled then
+    while true do
+        if
+            monstersEnabled or monsterLockerEnabled or searchLightEnabled or keyCardEnabled or generatorEnabled or
+                itemEnabled or
+                doorEnabled
+         then
             local preLastDoor = findPreLastRoom()
             if tempDoor then
                 if tempDoor ~= preLastDoor then
@@ -161,7 +186,6 @@ local function checkRenderCondition()
     end
 end
 
-
 local function multiFinder()
     monstersArray = {}
     keycards = {}
@@ -173,45 +197,46 @@ local function multiFinder()
     squiddles = {}
 
     if monstersEnabled or searchLightEnabled or keyCardEnabled or generatorEnabled or itemEnabled or doorEnabled then
-        for _,object in pairs(workspace:GetDescendants()) do
+        for _, object in pairs(workspace:GetDescendants()) do
             if object:IsA("Model") or object:IsA("Part") then
                 if monstersEnabled then
                     if object:IsA("Part") then
-                        if object.Name == "Angler" 
-                        or object.Name == "Pinkie" 
-                        or object.Name == "Froger" 
-                        or object.Name == "Blitz" 
-                        or object.Name == "Chainsmoker" 
-                        or object.Name == "Pandemonium" 
-                        or object.Name == "Eyefestation" 
-                        or object.Name == "Styx" 
-                        or object.Name == "Mirage"
-                        or object.Name == "Z-130"
-                        or object.Name == "A-60"
-                        or object.Name == "TheMulti-Monster"
-                        or object.Name == "RunEnder"
-                        or object.Name == "Z-90"
-                        or object.Name == "WallDwellers"
-                        or object.Name == "Amalgamation"
-                        or object.Name == "RidgeAngler" 
-                        or object.Name == "RidgePinkie" 
-                        or object.Name == "RidgeFroger" 
-                        or object.Name == "RidgeBlitz" 
-                        or object.Name == "RidgeChainsmoker" 
-                        or object.Name == "RidgePandemonium" 
-                        or object.Name == "RidgeEyefestation" 
-                        or object.Name == "RidgeStyx" then
+                        if
+                            object.Name == "Angler" or object.Name == "Pinkie" or object.Name == "Froger" or
+                                object.Name == "Blitz" or
+                                object.Name == "Chainsmoker" or
+                                object.Name == "Pandemonium" or
+                                object.Name == "Eyefestation" or
+                                object.Name == "Styx" or
+                                object.Name == "Mirage" or
+                                object.Name == "Z-130" or
+                                object.Name == "A-60" or
+                                object.Name == "TheMulti-Monster" or
+                                object.Name == "RunEnder" or
+                                object.Name == "Z-90" or
+                                object.Name == "WallDwellers" or
+                                object.Name == "Amalgamation" or
+                                object.Name == "RidgeAngler" or
+                                object.Name == "RidgePinkie" or
+                                object.Name == "RidgeFroger" or
+                                object.Name == "RidgeBlitz" or
+                                object.Name == "RidgeChainsmoker" or
+                                object.Name == "RidgePandemonium" or
+                                object.Name == "RidgeEyefestation" or
+                                object.Name == "RidgeStyx"
+                         then
                             table.insert(monstersArray, object)
 
                             if not detectedMonsters[object] then
                                 detectedMonsters[object] = true
-                                Fluent:Notify({
-                                    Title = "Warning",
-                                    Content = "Watch out " .. object.Name .. " is coming!",
-                                    Duration = 8
-                                })
+                                Fluent:Notify(
+                                    {
+                                        Title = "Warning",
+                                        Content = "Watch out " .. object.Name .. " is coming!",
+                                        Duration = 8
+                                    }
+                                )
                             end
-
                         end
                     end
                 end
@@ -255,7 +280,10 @@ local function multiFinder()
 
                 if generatorEnabled then
                     if object:IsA("Model") then
-                        if object.Name == "Generator" or object.Name == "EncounterGenerator" or object.Name == "BrokenCables" then
+                        if
+                            object.Name == "Generator" or object.Name == "EncounterGenerator" or
+                                object.Name == "BrokenCables"
+                         then
                             if object.Name == "Generator" or object.Name == "EncounterGenerator" then
                                 local fixed = object:FindFirstChild("Fixed")
                                 if fixed.Value == 0 then
@@ -270,7 +298,7 @@ local function multiFinder()
                                     end
                                 end
                             end
-                
+
                             if object.Name == "BrokenCables" then
                                 local fixed = object:FindFirstChild("Fixed")
                                 if fixed.Value == 0 then
@@ -293,7 +321,7 @@ local function multiFinder()
                     if object:IsA("Model") then
                         if object.Name == "Medkit" then
                             local zItem = object:FindFirstChild("Part")
-                            table.insert(itemsArray,zItem)
+                            table.insert(itemsArray, zItem)
                         end
                     end
                 end
@@ -303,17 +331,18 @@ local function multiFinder()
                         table.insert(doorArray, object)
                     end
                 end
-
             end
         end
     end
 end
 
-
-
 local function doFindAll()
     while true do
-        if monstersEnabled or monsterLockerEnabled or searchLightEnabled or keyCardEnabled or generatorEnabled or itemEnabled or doorEnabled then
+        if
+            monstersEnabled or monsterLockerEnabled or searchLightEnabled or keyCardEnabled or generatorEnabled or
+                itemEnabled or
+                doorEnabled
+         then
             if render then
                 multiFinder()
             end
@@ -322,11 +351,8 @@ local function doFindAll()
     end
 end
 
-
 -- =====================================================
 -- ROOMS
-
-
 
 local function findLastRoom()
     local rooms = findRooms()
@@ -338,9 +364,6 @@ local function findLastRoom()
     end
 end
 
-
-
-
 local function tpToLastRoom()
     local lastRoom = findLastRoom()
     if lastRoom then
@@ -350,9 +373,7 @@ local function tpToLastRoom()
             player.Character.HumanoidRootPart.CFrame = roomStart.CFrame
         end
     end
-
 end
-
 
 local function tpToLastRoomOpened()
     local preLastRoom = findPreLastRoom()
@@ -372,10 +393,10 @@ local function tpToOUTOFLastRoomOpened()
     local lastRoom = findLastRoom()
     if lastRoom then
         local roomStart = lastRoom:FindFirstChild("NormalDoor")
-        if roomStart then           
-                local player = game.Players.LocalPlayer
-                local targetCFrame = roomStart.CFrame * CFrame.new(0, 60, 0)
-                player.Character.HumanoidRootPart.CFrame = targetCFrame
+        if roomStart then
+            local player = game.Players.LocalPlayer
+            local targetCFrame = roomStart.CFrame * CFrame.new(0, 60, 0)
+            player.Character.HumanoidRootPart.CFrame = targetCFrame
         end
     end
 end
@@ -388,9 +409,7 @@ local function tpToLastRoom()
             player.Character.HumanoidRootPart.CFrame = roomStart.CFrame
         end
     end
-
 end
-
 
 -- =====================================================
 -- LOCKERS
@@ -417,7 +436,6 @@ local function findLastLocker()
     end
 end
 
-
 local function tpToLastLocker()
     findLockers()
     local lastLocker = findLastLocker()
@@ -430,14 +448,16 @@ local function tpToLastLocker()
     end
 end
 
-
 -- =====================================================
 -- Monsters
 
-
 local function deleteSearchLight()
-    for _,object in pairs(workspace:GetDescendants()) do
-        if object.Name == "MainSearchlight" or object.Name == "Searchlights1" or object.Name == "Searchlights2" or object.Name == "Searchlights3" or object.Name == "SearchlightsCave" then
+    for _, object in pairs(workspace:GetDescendants()) do
+        if
+            object.Name == "MainSearchlight" or object.Name == "Searchlights1" or object.Name == "Searchlights2" or
+                object.Name == "Searchlights3" or
+                object.Name == "SearchlightsCave"
+         then
             for _, child in pairs(object:GetChildren()) do
                 child:Destroy()
             end
@@ -446,7 +466,7 @@ local function deleteSearchLight()
 end
 
 local function destroySquiddles()
-    for _,object in pairs(workspace:GetDescendants()) do
+    for _, object in pairs(workspace:GetDescendants()) do
         if object.Name == "SquiddleBuildup" and object.Parent and object.Parent.Name == "Face" then
             local face = object.Parent
             local Squiddle = face.Parent
@@ -458,7 +478,7 @@ local function destroySquiddles()
 end
 
 local function destroyMonsterLocker()
-    for _,mLocker in pairs(workspace:GetDescendants()) do
+    for _, mLocker in pairs(workspace:GetDescendants()) do
         if mLocker.Name == "MonsterLocker" then
             mLocker:Destroy()
         end
@@ -467,7 +487,6 @@ end
 
 -- ===========================================
 -- KEYCARD
-
 
 local function tpToKeyCard()
     for _, keyCard in pairs(keycards) do
@@ -478,12 +497,8 @@ local function tpToKeyCard()
     end
 end
 
-
-
 -- =====================================================
 -- Generator
-
-
 
 local function tpToGenerator()
     local generators = generatorArray
@@ -499,14 +514,19 @@ end
 -- =====================================================
 -- Items
 
-
 -- =====================================================
 -- Money
 
 local function findMoney()
     local room = findPreLastRoom()
-    for _,object in pairs(room:GetDescendants()) do
-        if object.Name == "50Currency" or object.Name == "15Currency" or object.Name == "10Currency" or object.Name == "100Currency" or object.Name == "5Currency" or object.Name == "200Currency" or object.Name == "25Currency" then
+    for _, object in pairs(room:GetDescendants()) do
+        if
+            object.Name == "50Currency" or object.Name == "15Currency" or object.Name == "10Currency" or
+                object.Name == "100Currency" or
+                object.Name == "5Currency" or
+                object.Name == "200Currency" or
+                object.Name == "25Currency"
+         then
             local money = object:FindFirstChild("ProxyPart")
             table.insert(moneyArray, money)
         end
@@ -535,66 +555,76 @@ end
 
 -- ===========================================
 
+Tabs.Teleports:AddButton(
+    {
+        Title = "Teleport to Last Room",
+        Description = "Hotkey : NumPad 1",
+        Callback = function()
+            tpToLastRoom()
+        end
+    }
+)
 
-Tabs.Teleports:AddButton({
-    Title = "Teleport to Last Room",
-    Description = "Hotkey : NumPad 1",
-    Callback = function()
-        tpToLastRoom()
-    end
-})
+Tabs.Teleports:AddButton(
+    {
+        Title = "Teleport to Last Room Opened",
+        Description = "Hotkey : NumPad 2",
+        Callback = function()
+            tpToLastRoomOpened()
+        end
+    }
+)
 
-Tabs.Teleports:AddButton({
-    Title = "Teleport to Last Room Opened",
-    Description = "Hotkey : NumPad 2",
-    Callback = function()
-        tpToLastRoomOpened()
-    end
-})
+Tabs.Teleports:AddButton(
+    {
+        Title = "Teleport to Last Locker",
+        Description = "Hotkey : NumPad 3",
+        Callback = function()
+            tpToLastLocker()
+        end
+    }
+)
 
-Tabs.Teleports:AddButton({
-    Title = "Teleport to Last Locker",
-    Description = "Hotkey : NumPad 3",
-    Callback = function()
-        tpToLastLocker()
-    end
-})
+Tabs.Teleports:AddButton(
+    {
+        Title = "Teleport to KeyCard",
+        Description = "Hotkey : NumPad 4",
+        Callback = function()
+            tpToKeyCard()
+        end
+    }
+)
 
-Tabs.Teleports:AddButton({
-    Title = "Teleport to KeyCard",
-    Description = "Hotkey : NumPad 4",
-    Callback = function()
-        tpToKeyCard()
-    end
-})
+Tabs.Teleports:AddButton(
+    {
+        Title = "Hide From Monsters",
+        Description = "Hotkey : NumPad 7",
+        Callback = function()
+            tpToOUTOFLastRoomOpened()
+        end
+    }
+)
 
-Tabs.Teleports:AddButton({
-    Title = "Hide From Monsters",
-    Description = "Hotkey : NumPad 7",
-    Callback = function()
-        tpToOUTOFLastRoomOpened()
-    end
-})
+Tabs.Teleports:AddButton(
+    {
+        Title = "Teleport to Generator",
+        Description = "Hotkey : NumPad 8",
+        Callback = function()
+            tpToGenerator()
+        end
+    }
+)
 
-Tabs.Teleports:AddButton({
-    Title = "Teleport to Generator",
-    Description = "Hotkey : NumPad 8",
-    Callback = function()
-        tpToGenerator()
-    end
-})
-
-
-local function createBillboard(spawner, EspName, Shape, GuiColor,GUIESPNAME,b_s,t_so)
+local function createBillboard(spawner, EspName, Shape, GuiColor, GUIESPNAME, b_s, t_so)
     local billboardGui = Instance.new("BillboardGui")
     billboardGui.Size = UDim2.new(b_s, 0, b_s, 0)
     billboardGui.AlwaysOnTop = true
     billboardGui.Name = GUIESPNAME
     billboardGui.Adornee = spawner
-    
+
     if t_so == 5 then
         billboardGui.SizeOffset = Vector2.new(0, 10)
-        billboardGui.StudsOffsetWorldSpace  = Vector3.new(4, 0, 0)
+        billboardGui.StudsOffsetWorldSpace = Vector3.new(4, 0, 0)
     end
 
     if Shape ~= 0 then
@@ -608,7 +638,7 @@ local function createBillboard(spawner, EspName, Shape, GuiColor,GUIESPNAME,b_s,
         if t_so ~= 5 then
             uiStroke.Thickness = 4
             uiStroke.Color = Color3.new(0, 0, 1)
-        else 
+        else
             uiStroke.Thickness = 1
             uiStroke.Color = Color3.new(1, 1, 0)
         end
@@ -622,11 +652,10 @@ local function createBillboard(spawner, EspName, Shape, GuiColor,GUIESPNAME,b_s,
         end
     end
 
-    
     local nameGui = Instance.new("BillboardGui")
     if t_so == 5 then
         nameGui.Size = UDim2.new(0, 0, 0, 0)
-    else  
+    else
         nameGui.Size = UDim2.new(3, 0, 1.5, 0)
     end
     nameGui.SizeOffset = Vector2.new(0, t_so)
@@ -676,9 +705,8 @@ local function createBillboard(spawner, EspName, Shape, GuiColor,GUIESPNAME,b_s,
 
     screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
-    return { billboardGui, nameGui, warningLabel, screenGui }
+    return {billboardGui, nameGui, warningLabel, screenGui}
 end
-
 
 local function removeDoorsESP()
     for _, esp in pairs(doorsESPObjects) do
@@ -688,38 +716,39 @@ local function removeDoorsESP()
     doorsESPObjects = {}
 end
 
-DoorESP:OnChanged(function()
-    if Options.DoorESP.Value then
-        doorEnabled = true
-        render = true
-        while Options.DoorESP.Value do
-            local preLastDoor = doorArray[#doorArray - 1]
+DoorESP:OnChanged(
+    function()
+        if Options.DoorESP.Value then
+            doorEnabled = true
+            render = true
+            while Options.DoorESP.Value do
+                local preLastDoor = doorArray[#doorArray - 1]
 
-            if preLastDoor then
-                if not preLastDoor:FindFirstChild("Door_ESP") then
-                    local espObjects = createBillboard(preLastDoor, "Door", 2, Color3.fromRGB(255, 255, 255), "Door_ESP", .5, 5)
-                    table.insert(doorsESPObjects, espObjects)
-                end
-                
-                if previousDoorESP and previousDoorESP ~= preLastDoor then
-                    local oldESP = previousDoorESP:FindFirstChild("Door_ESP")
-                    if oldESP then
-                        oldESP:Destroy()
+                if preLastDoor then
+                    if not preLastDoor:FindFirstChild("Door_ESP") then
+                        local espObjects =
+                            createBillboard(preLastDoor, "Door", 2, Color3.fromRGB(255, 255, 255), "Door_ESP", .5, 5)
+                        table.insert(doorsESPObjects, espObjects)
                     end
+
+                    if previousDoorESP and previousDoorESP ~= preLastDoor then
+                        local oldESP = previousDoorESP:FindFirstChild("Door_ESP")
+                        if oldESP then
+                            oldESP:Destroy()
+                        end
+                    end
+
+                    previousDoorESP = preLastDoor
                 end
 
-                previousDoorESP = preLastDoor
+                task.wait(1)
             end
-
-            task.wait(1)
+        else
+            doorEnabled = false
+            removeDoorsESP()
         end
-    else
-        doorEnabled = false
-        removeDoorsESP()
     end
-end)
-
-
+)
 
 local function removeItemsESP()
     for _, esp in pairs(itemsESPObjects) do
@@ -729,24 +758,27 @@ local function removeItemsESP()
     itemsESPObjects = {}
 end
 
-ItemsESP:OnChanged(function()
-    if Options.ItemsESP.Value then
-        itemEnabled = true
-        render = true
-        while Options.ItemsESP.Value do
-            for _, item in pairs(itemsArray) do
-                if not item:FindFirstChild("Item_ESP") then
-                    local espObjects = createBillboard(item, "MedKit", 1, Color3.fromRGB(0, 255, 255),"Item_ESP",1,1)
-                    table.insert(itemsESPObjects, espObjects)
+ItemsESP:OnChanged(
+    function()
+        if Options.ItemsESP.Value then
+            itemEnabled = true
+            render = true
+            while Options.ItemsESP.Value do
+                for _, item in pairs(itemsArray) do
+                    if not item:FindFirstChild("Item_ESP") then
+                        local espObjects =
+                            createBillboard(item, "MedKit", 1, Color3.fromRGB(0, 255, 255), "Item_ESP", 1, 1)
+                        table.insert(itemsESPObjects, espObjects)
+                    end
                 end
+                task.wait(1)
             end
-            task.wait(1)
+        else
+            itemEnabled = false
+            removeItemsESP()
         end
-    else
-        itemEnabled = false
-        removeItemsESP()
     end
-end)
+)
 
 local function removeMonstersESP()
     for _, esp in pairs(monstersESPObjects) do
@@ -756,24 +788,27 @@ local function removeMonstersESP()
     monstersESPObjects = {}
 end
 
-MonstersESP:OnChanged(function()
-    if Options.MonstersESP.Value then
-        monstersEnabled = true
-        render = true
-        while Options.MonstersESP.Value do
-            for _, monster in pairs(monstersArray) do
-                if not monster:FindFirstChild("Monster_ESP") then
-                    local espObjects = createBillboard(monster, monster.Name, 2, Color3.fromRGB(255, 0, 0),"Monster_ESP",1,1)
-                    table.insert(monstersESPObjects, espObjects)
+MonstersESP:OnChanged(
+    function()
+        if Options.MonstersESP.Value then
+            monstersEnabled = true
+            render = true
+            while Options.MonstersESP.Value do
+                for _, monster in pairs(monstersArray) do
+                    if not monster:FindFirstChild("Monster_ESP") then
+                        local espObjects =
+                            createBillboard(monster, monster.Name, 2, Color3.fromRGB(255, 0, 0), "Monster_ESP", 1, 1)
+                        table.insert(monstersESPObjects, espObjects)
+                    end
                 end
+                task.wait(1)
             end
-            task.wait(1)
+        else
+            monstersEnabled = false
+            removeMonstersESP()
         end
-    else
-        monstersEnabled = false
-        removeMonstersESP()
     end
-end)
+)
 
 local function removeKeyCardESP()
     for _, esp in pairs(keyCardESPObjects) do
@@ -783,25 +818,27 @@ local function removeKeyCardESP()
     keyCardESPObjects = {}
 end
 
-KeyCardsESP:OnChanged(function()
-    if Options.KeyCardsESP.Value then
-        keyCardEnabled = true
-        render = true
-        while Options.KeyCardsESP.Value do
-            for _, keyCard in pairs(keycards) do
-                if not keyCard:FindFirstChild("KeyCard_ESP") then
-                    local espObjects = createBillboard(keyCard, "KeyCard", 1, Color3.fromRGB(0, 255, 0),"KeyCard_ESP",1,1)
-                    table.insert(keyCardESPObjects, espObjects)  
+KeyCardsESP:OnChanged(
+    function()
+        if Options.KeyCardsESP.Value then
+            keyCardEnabled = true
+            render = true
+            while Options.KeyCardsESP.Value do
+                for _, keyCard in pairs(keycards) do
+                    if not keyCard:FindFirstChild("KeyCard_ESP") then
+                        local espObjects =
+                            createBillboard(keyCard, "KeyCard", 1, Color3.fromRGB(0, 255, 0), "KeyCard_ESP", 1, 1)
+                        table.insert(keyCardESPObjects, espObjects)
+                    end
                 end
+                task.wait(1)
             end
-            task.wait(1)
+        else
+            keyCardEnabled = false
+            removeKeyCardESP()
         end
-    else
-        keyCardEnabled = false
-        removeKeyCardESP()
     end
-end)
-
+)
 
 local function removeGeneratorESP()
     for _, esp in pairs(generatorESPObjects) do
@@ -811,78 +848,87 @@ local function removeGeneratorESP()
     generatorESPObjects = {}
 end
 
-
-GeneratorESP:OnChanged(function()
-    if Options.GeneratorESP.Value then
-        generatorEnabled = true
-        render = true
-        while Options.GeneratorESP.Value do
-            for _, generator in pairs(generatorArray) do
-                if not generator:FindFirstChild("Generator_ESP") then
-                    local espObjects = createBillboard(generator, "Generator", 1, Color3.fromRGB(255, 255, 0),"Generator_ESP",1,1)
-                    table.insert(generatorESPObjects, espObjects)
+GeneratorESP:OnChanged(
+    function()
+        if Options.GeneratorESP.Value then
+            generatorEnabled = true
+            render = true
+            while Options.GeneratorESP.Value do
+                for _, generator in pairs(generatorArray) do
+                    if not generator:FindFirstChild("Generator_ESP") then
+                        local espObjects =
+                            createBillboard(
+                            generator,
+                            "Generator",
+                            1,
+                            Color3.fromRGB(255, 255, 0),
+                            "Generator_ESP",
+                            1,
+                            1
+                        )
+                        table.insert(generatorESPObjects, espObjects)
+                    end
                 end
-            end
-            if fixedGeneratorArray then
-                for _, generator in pairs(fixedGeneratorArray) do
-                    generator:Destroy()
+                if fixedGeneratorArray then
+                    for _, generator in pairs(fixedGeneratorArray) do
+                        generator:Destroy()
+                    end
+                    fixedGeneratorArray = {}
                 end
-                fixedGeneratorArray = {}
+                task.wait(1)
             end
-            task.wait(1)
+        else
+            generatorEnabled = false
+            removeGeneratorESP()
         end
-    else
-        generatorEnabled = false
-        removeGeneratorESP()
     end
-end)
+)
 
-
-
-MoneyFarm:OnChanged(function()
-    if Options.MoneyFarm.Value then
-        while Options.MoneyFarm.Value do
+MoneyFarm:OnChanged(
+    function()
+        if Options.MoneyFarm.Value then
+            while Options.MoneyFarm.Value do
+                moneyFarmEnable = not moneyFarmEnable
+                farmMoney()
+                task.wait(1)
+            end
+        else
             moneyFarmEnable = not moneyFarmEnable
-            farmMoney()
-            task.wait(1)
-        end
-    else
-        moneyFarmEnable = not moneyFarmEnable
-    end
-end)
-
-DestroySquiddles:OnChanged(function()
-    if Options.DestroySquiddles.Value then
-        while Options.DestroySquiddles.Value do
-            destroySquiddles()
-            task.wait(1)
         end
     end
-end)
+)
 
-
-
-DestroyMonsterLocker:OnChanged(function()
-    if Options.DestroyMonsterLocker.Value then
-        while Options.DestroyMonsterLocker.Value do
-            destroyMonsterLocker()
-            task.wait(1)
+DestroySquiddles:OnChanged(
+    function()
+        if Options.DestroySquiddles.Value then
+            while Options.DestroySquiddles.Value do
+                destroySquiddles()
+                task.wait(1)
+            end
         end
     end
-end)
+)
 
-
-
-Tabs.Visuals:AddButton({
-    Title = "Passive SearchLights",
-    Description = "Press it when SearchLight Spawns",
-    Callback = function()
-        deleteSearchLight()
+DestroyMonsterLocker:OnChanged(
+    function()
+        if Options.DestroyMonsterLocker.Value then
+            while Options.DestroyMonsterLocker.Value do
+                destroyMonsterLocker()
+                task.wait(1)
+            end
+        end
     end
-})
+)
 
-
-
+Tabs.Visuals:AddButton(
+    {
+        Title = "Passive SearchLights",
+        Description = "Press it when SearchLight Spawns",
+        Callback = function()
+            deleteSearchLight()
+        end
+    }
+)
 
 local function setFullbright(enabled)
     if enabled then
@@ -897,35 +943,41 @@ local function setFullbright(enabled)
 end
 
 local function setupHotkeys()
-    UserInputService.InputBegan:Connect(function(input, gameProcessed)
-        if gameProcessed then return end
+    UserInputService.InputBegan:Connect(
+        function(input, gameProcessed)
+            if gameProcessed then
+                return
+            end
 
-        if input.KeyCode == Enum.KeyCode.KeypadOne then
-            tpToLastRoom()
-        elseif input.KeyCode == Enum.KeyCode.KeypadTwo then
-            tpToLastRoomOpened()
-        elseif input.KeyCode == Enum.KeyCode.KeypadThree then
-            tpToLastLocker()
-        elseif input.KeyCode == Enum.KeyCode.KeypadFour then
-            tpToKeyCard()
-        elseif input.KeyCode == Enum.KeyCode.KeypadFive then
-            moneyFarmEnable = not moneyFarmEnable
-            farmMoney()
-        elseif input.KeyCode == Enum.KeyCode.KeypadSeven then
-            tpToOUTOFLastRoomOpened()
-        elseif input.KeyCode == Enum.KeyCode.KeypadEight then
-            tpToGenerator()
+            if input.KeyCode == Enum.KeyCode.KeypadOne then
+                tpToLastRoom()
+            elseif input.KeyCode == Enum.KeyCode.KeypadTwo then
+                tpToLastRoomOpened()
+            elseif input.KeyCode == Enum.KeyCode.KeypadThree then
+                tpToLastLocker()
+            elseif input.KeyCode == Enum.KeyCode.KeypadFour then
+                tpToKeyCard()
+            elseif input.KeyCode == Enum.KeyCode.KeypadFive then
+                moneyFarmEnable = not moneyFarmEnable
+                farmMoney()
+            elseif input.KeyCode == Enum.KeyCode.KeypadSeven then
+                tpToOUTOFLastRoomOpened()
+            elseif input.KeyCode == Enum.KeyCode.KeypadEight then
+                tpToGenerator()
+            end
         end
-    end)
+    )
 end
 
 setupHotkeys()
 spawn(checkRenderCondition)
 spawn(doFindAll)
 
-FullbrightToggle:OnChanged(function()
-    setFullbright(Options.Fullbright.Value)
-end)
+FullbrightToggle:OnChanged(
+    function()
+        setFullbright(Options.Fullbright.Value)
+    end
+)
 
 setFullbright(Options.Fullbright.Value)
 
@@ -942,10 +994,12 @@ SaveManager:BuildConfigSection(Tabs.Settings)
 
 Window:SelectTab(1)
 
-Fluent:Notify({
-    Title = "RaT",
-    Content = "https://discord.gg/UfQytpR2Gx",
-    Duration = 8
-})
+Fluent:Notify(
+    {
+        Title = "RaT",
+        Content = "https://discord.gg/UfQytpR2Gx",
+        Duration = 8
+    }
+)
 
 SaveManager:LoadAutoloadConfig()
