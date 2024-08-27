@@ -1,0 +1,269 @@
+-- Task 1
+getgenv().AutoCompleteZoroQuest1 = true
+
+local function runTask1()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local KnitPackage = ReplicatedStorage:WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit")
+    local AdventureService = KnitPackage:WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF")
+    local DialogueService = KnitPackage:WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF")
+    
+    while getgenv().AutoCompleteZoroQuest1 do
+        pcall(function()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            local args = {[1] = "Zoros_Swords_Adventure"}
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+        end)
+        task.wait(0.005)
+    end
+end
+
+for i = 1, 20 do
+    task.spawn(runTask1)
+end
+
+-- Task 2
+getgenv().AutoCompleteZoroQuest2 = true
+
+local function runTask2()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local KnitPackage = ReplicatedStorage:WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit")
+    local AdventureService = KnitPackage:WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF")
+    local DialogueService = KnitPackage:WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF")
+    
+    while getgenv().AutoCompleteZoroQuest2 do
+        pcall(function()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            local args = {[1] = "Zoros_Swords_Adventure"}
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+        end)
+        task.wait(0.005)
+    end
+end
+
+for i = 1, 20 do
+    task.spawn(runTask2)
+end
+
+-- Task 3
+getgenv().AutoCompleteZoroQuest3 = true
+
+local function runTask3()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local KnitPackage = ReplicatedStorage:WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit")
+    local AdventureService = KnitPackage:WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF")
+    local DialogueService = KnitPackage:WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF")
+    
+    while getgenv().AutoCompleteZoroQuest3 do
+        pcall(function()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            local args = {[1] = "Zoros_Swords_Adventure"}
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+        end)
+        task.wait(0.005)
+    end
+end
+
+for i = 1, 20 do
+    task.spawn(runTask3)
+end
+
+-- Task 4
+getgenv().AutoCompleteZoroQuest4 = true
+
+local function runTask4()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local KnitPackage = ReplicatedStorage:WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit")
+    local AdventureService = KnitPackage:WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF")
+    local DialogueService = KnitPackage:WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF")
+    
+    while getgenv().AutoCompleteZoroQuest4 do
+        pcall(function()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            local args = {[1] = "Zoros_Swords_Adventure"}
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+        end)
+        task.wait(0.005)
+    end
+end
+
+for i = 1, 20 do
+    task.spawn(runTask4)
+end
+
+-- Task 5
+getgenv().AutoCompleteZoroQuest5 = true
+
+local function runTask5()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local KnitPackage = ReplicatedStorage:WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit")
+    local AdventureService = KnitPackage:WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF")
+    local DialogueService = KnitPackage:WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF")
+    
+    while getgenv().AutoCompleteZoroQuest5 do
+        pcall(function()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            local args = {[1] = "Zoros_Swords_Adventure"}
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+        end)
+        task.wait(0.005)
+    end
+end
+
+for i = 1, 20 do
+    task.spawn(runTask5)
+end
+
+-- Task 6
+getgenv().AutoCompleteZoroQuest6 = true
+
+local function runTask6()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local KnitPackage = ReplicatedStorage:WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit")
+    local AdventureService = KnitPackage:WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF")
+    local DialogueService = KnitPackage:WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF")
+    
+    while getgenv().AutoCompleteZoroQuest6 do
+        pcall(function()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            local args = {[1] = "Zoros_Swords_Adventure"}
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+        end)
+        task.wait(0.005)
+    end
+end
+
+for i = 1, 20 do
+    task.spawn(runTask6)
+end
+
+-- Task 7
+getgenv().AutoCompleteZoroQuest7 = true
+
+local function runTask7()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local KnitPackage = ReplicatedStorage:WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit")
+    local AdventureService = KnitPackage:WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF")
+    local DialogueService = KnitPackage:WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF")
+    
+    while getgenv().AutoCompleteZoroQuest7 do
+        pcall(function()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            local args = {[1] = "Zoros_Swords_Adventure"}
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+        end)
+        task.wait(0.005)
+    end
+end
+
+for i = 1, 20 do
+    task.spawn(runTask7)
+end
+
+-- Task 8
+getgenv().AutoCompleteZoroQuest8 = true
+
+local function runTask8()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local KnitPackage = ReplicatedStorage:WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit")
+    local AdventureService = KnitPackage:WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF")
+    local DialogueService = KnitPackage:WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF")
+    
+    while getgenv().AutoCompleteZoroQuest8 do
+        pcall(function()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            local args = {[1] = "Zoros_Swords_Adventure"}
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+        end)
+        task.wait(0.005)
+    end
+end
+
+for i = 1, 20 do
+    task.spawn(runTask8)
+end
+
+-- Task 9
+getgenv().AutoCompleteZoroQuest9 = true
+
+local function runTask9()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local KnitPackage = ReplicatedStorage:WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit")
+    local AdventureService = KnitPackage:WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF")
+    local DialogueService = KnitPackage:WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF")
+    
+    while getgenv().AutoCompleteZoroQuest9 do
+        pcall(function()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            local args = {[1] = "Zoros_Swords_Adventure"}
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+        end)
+        task.wait(0.005)
+    end
+end
+
+for i = 1, 20 do
+    task.spawn(runTask9)
+end
+
+-- Task 10
+getgenv().AutoCompleteZoroQuest10 = true
+
+local function runTask10()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local KnitPackage = ReplicatedStorage:WaitForChild("ReplicatedModules"):WaitForChild("KnitPackage"):WaitForChild("Knit")
+    local AdventureService = KnitPackage:WaitForChild("Services"):WaitForChild("AdventureService"):WaitForChild("RF")
+    local DialogueService = KnitPackage:WaitForChild("Services"):WaitForChild("DialogueService"):WaitForChild("RF")
+    
+    while getgenv().AutoCompleteZoroQuest10 do
+        pcall(function()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            local args = {[1] = "Zoros_Swords_Adventure"}
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            DialogueService:WaitForChild("CheckDialogue"):InvokeServer(unpack(args))
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+            AdventureService:WaitForChild("PickedUpSword"):InvokeServer()
+        end)
+        task.wait(0.005)
+    end
+end
+
+for i = 1, 20 do
+    task.spawn(runTask10)
+end
